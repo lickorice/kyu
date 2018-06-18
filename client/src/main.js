@@ -9,7 +9,12 @@ let mainWindow;
 // method on ready
 app.on('ready', function(){
     // init main window
-    mainWindow = new BrowserWindow({});
+    mainWindow = new BrowserWindow({
+      width:300,
+      height:400,
+      resizable: false,
+      frame: false
+    });
 
     // set as fullscreen (uncomment)
     // mainWindow.setFullScreen(true);

@@ -7,15 +7,41 @@
     <script type="text/javascript" src="socket.io.dev.js"></script>
   </head>
   <body>
-    <button type="button" id="next">Next</button>
-    <select id="dropdown">
-       <option value="001">Counter 1</option>
-       <option value="002">Counter 2</option>
-       <option value="003">Counter 3</option>
-       <option value="004">Counter 4</option>
-       <option value="005">Counter 5</option>
-       <option value="006">Counter 6</option>
-     </select>
+    <!-- TITLE BAR -->
+    <div id="title-bar">
+         <div id="title">SMPi Queueing Client</div>
+         <div id="title-bar-btns">
+              <button id="close-btn">x</button>
+         </div>
+    </div>
+    <!-- END OF TITLE BAR -->
+
+    <div class="container_master">
+      <div class="container_current">
+        You are currently serving:
+        <div class="container_current_number" id="current_number">
+          -
+        </div>
+      </div>
+      <div class="container_next">
+        <button type="button" class="btn" id="next">NEXT CUSTOMER</button>
+      </div>
+      <div class="container_config">
+        <div class="container_config_description">
+        You are currently using:
+        </div>
+        <div class="container_config_dropdown">
+          <select id="dropdown">
+             <option value="001">Counter 1</option>
+             <option value="002">Counter 2</option>
+             <option value="003">Counter 3</option>
+             <option value="004">Counter 4</option>
+             <option value="005">Counter 5</option>
+             <option value="006">Counter 6</option>
+           </select>
+        </div>
+      </div>
+    </div>
     <script type="text/javascript" src="main.js"></script>
   </body>
 </html>
