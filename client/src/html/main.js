@@ -8,7 +8,6 @@ var currentn = document.getElementById('current_number');
 
 // Emit a counter event
 btn_next.addEventListener('click', function() {
-  btn_next.innerHTML = 'LOL'
   socket.emit('next', {
     counterID: dropdown.value
   });

@@ -34,23 +34,48 @@ socket.on('next', function(data) {
       break;
     case '002':
       checkEmpty(queue_numbers);
-      customer_number_2.innerHTML = queue_numbers.pop();
+      nextinline = queue_numbers.pop();
+      customer_number_2.innerHTML = nextinline;
+      socket.emit('callback', {
+        counterID: '002',
+        counterServing: nextinline
+      });
       break;
     case '003':
       checkEmpty(queue_numbers);
-      customer_number_3.innerHTML = queue_numbers.pop();
+      nextinline = queue_numbers.pop();
+      customer_number_3.innerHTML = nextinline;
+      socket.emit('callback', {
+        counterID: '003',
+        counterServing: nextinline
+      });
       break;
     case '004':
       checkEmpty(queue_numbers);
-      customer_number_4.innerHTML = queue_numbers.pop();
+      nextinline = queue_numbers.pop();
+      customer_number_4.innerHTML = nextinline;
+      socket.emit('callback', {
+        counterID: '004',
+        counterServing: nextinline
+      });
       break;
     case '005':
       checkEmpty(queue_numbers);
-      customer_number_5.innerHTML = queue_numbers.pop();
+      nextinline = queue_numbers.pop();
+      customer_number_5.innerHTML = nextinline;
+      socket.emit('callback', {
+        counterID: '005',
+        counterServing: nextinline
+      });
       break;
     case '006':
       checkEmpty(queue_numbers);
-      customer_number_6.innerHTML = queue_numbers.pop();
+      nextinline = queue_numbers.pop();
+      customer_number_6.innerHTML = nextinline;
+      socket.emit('callback', {
+        counterID: '006',
+        counterServing: nextinline
+      });
       break;
     default:
 
