@@ -1,0 +1,7 @@
+1.0.0 release alpha:
+  ✔ develop client and server side socket based communication system @done(2018-06-18 17:19) @project(1.0.0 release alpha)
+  ✔ integrate to electron @done(2018-06-18 17:19) @project(1.0.0 release alpha)
+  ☐ futher develop for six counters
+  ☐ fix css styling
+  ☐ attempt to add audio
+  ☐ remove hardcoding

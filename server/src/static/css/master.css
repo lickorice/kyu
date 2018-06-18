@@ -1,0 +1,84 @@
+@font-face {
+  font-family: "Roboto-Regular";
+  src: url(fonts/Roboto-Regular.ttf);
+}
+
+@font-face {
+  font-family: "Roboto-Medium";
+  src: url(fonts/Roboto-Medium.ttf);
+}
+
+@font-face {
+  font-family: "Roboto-Black";
+  src: url(fonts/Roboto-Black.ttf);
+}
+
+body {
+  background-color: #282828;
+  font-family: "Roboto-Regular";
+  color: white;
+}
+
+.container_master {
+  width: auto;
+  height: auto;
+  margin-top: 50px;
+}
+
+.container_counter_title {
+  color: rgb(144, 144, 144);
+  font-family: Roboto-Medium;
+  text-shadow: 0px 0px 5px black;
+}
+
+.container_customer_title {
+  color: rgb(144, 144, 144);
+  font-family: Roboto-Medium;
+  text-shadow: 0px 0px 5px black;
+}
+
+.container_queue {
+  text-align: center;
+  width: 49%;
+  display: block;
+}
+
+.container_misc {
+  text-align: center;
+  width: 49%;
+  display: block;
+}
+
+.container_counter {
+  width: 46%;
+  height: auto;
+  display: inline-block;
+  padding: 10px;
+}
+
+.container_customer {
+  width: 47%;
+  height: auto;
+  display: inline-block;
+  border: solid rgb(112, 112, 112) 1px;
+  border-radius: 5px;
+  background-color: rgb(24, 24, 24);
+  padding: 10px;
+}
+
+.container_counter_number {
+  font-family: Roboto-Black;
+  font-size: 70px;
+  text-shadow: 0px 0px 10px black;
+}
+
+.container_customer_number {
+  font-family: Roboto-Black;
+  font-size: 70px;
+  text-shadow: 0px 0px 10px black;
+}
+
+.container_qlist {
+  padding: 2px;
+  margin: 5px;
+}
