@@ -25,7 +25,12 @@ socket.on('next', function(data) {
   switch (data.counterID) {
     case '001':
       checkEmpty(queue_numbers);
-      customer_number_1.innerHTML = queue_numbers.pop();
+      nextinline = queue_numbers.pop();
+      customer_number_1.innerHTML = nextinline;
+      socket.emit('callback', {
+        counterID: '001',
+        counterServing: nextinline
+      });
       break;
     case '002':
       checkEmpty(queue_numbers);

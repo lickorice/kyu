@@ -21,4 +21,8 @@ io.on('connection', function(socket){
   socket.on('next', function(data){
     io.sockets.emit('next', data)
   })
+
+  socket.on('callback', function(data){
+    io.sockets.emit('callback', data)
+  })
 });
