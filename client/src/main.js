@@ -11,12 +11,11 @@ const {
 let mainWindow;
 let prefWindow;
 
-
 // listen for preferences button
 ipcMain.on('show-preferences', function() {
-  // init 
+  // init
   prefWindow = new BrowserWindow({
-    width: 400,
+    width: 500,
     height: 300,
     // resizable: false,
     frame: false
@@ -27,6 +26,10 @@ ipcMain.on('show-preferences', function() {
     slashes: true
   }));
   prefWindow.show();
+});
+
+ipcMain.on('client-refresh', function() {
+  mainWindow.reload();
 });
 
 // method on ready

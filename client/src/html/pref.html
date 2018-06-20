@@ -1,17 +1,51 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Preferences Window</title>
-  </head>
-  <body>
-    <!-- TITLE BAR -->
-    <div id="title-bar">
-         <div id="title">Preferences Window</div>
-         <div id="title-bar-btns">
-              <button id="close-btn">x</button>
-         </div>
-    </div>
 
-  </body>
+<head>
+  <meta charset="utf-8">
+  <title>Preferences Window</title>
+  <link rel="stylesheet" href="pref.css">
+  <script type="text/javascript" src="socket.io.dev.js"></script>
+</head>
+
+<body>
+  <!-- TITLE BAR -->
+  <div id="title-bar">
+    <div id="title">Preferences Window</div>
+    <div id="title-bar-btns">
+      <button id="close-btn">x</button>
+    </div>
+  </div>
+
+
+  <!-- END OF TITLE BAR -->
+  <div class="container_master">
+    <div class="container_config">
+      <div class="config_item">
+        Server IP Address:
+        <input type="text" id="ip" name="ip_address" value="asd" />
+      </div>
+      <div class="config_item">
+        Current counter:
+        <select id="counter_drp">
+        </select>
+      </div>
+
+      <div class="config_item">
+        <button type="button" name="save" id="save">SAVE CHANGES</button>
+      </div>
+
+      <div class="config_item" id="restart_str">
+        Restart server: (requires connection to server)
+      </div>
+
+      <div class="config_item">
+        <button type="button" name="restart" id="restart">RESTART SERVER</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="pref.js"></script>
+</body>
+
 </html>

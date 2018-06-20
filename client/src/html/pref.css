@@ -13,51 +13,78 @@
   src: url(fonts/Roboto-Black.ttf);
 }
 
+@font-face {
+  font-family: "Inconsolata-Regular";
+  src: url(fonts/Inconsolata-Regular.ttf);
+}
+
 body {
   padding: 0px;
   margin: 0px;
   background-color: #143b6e;
-  font-family: "Roboto-Medium";
+  font-family: Inconsolata-Regular;
   color: #5d8ecd;
   text-align: center;
 }
 
 .container_master {
-  margin: 50px;
-}
-
-.container_current_number {
-  color: white;
-  font-family: "Roboto-Black";
-  font-size: 50px;
-  margin: 10px;
+    width: 90%;
+    height: auto;
+    margin: 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
 }
 
 .container_config {
-  margin-top: 20px;
+  width: 100%;
+  padding: 10px;
+  background-color: #062e63;
+  border-radius: 10px;
+  box-shadow: inset 0 0 10px black;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
 }
 
-.container_config_dropdown select {
-  margin-top: 7px;
-  background-color: #062e63;
+.config_item {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 5px;
+}
+
+.config_item input {
+  margin-left: 20px;
+  border: 0px;
+  background-color: #05254f;
+  color: white;
+  font-family: Inconsolata-Regular
+}
+
+.config_item select {
+  margin-left: 20px;
+  border: 0px;
+  background-color: #05254f;
+  color: white;
+  font-family: Inconsolata-Regular
+}
+
+.config_item button {
+  padding: 10px;
+  border: 0px;
+  margin: 10px;
+  background-color: #05254f;
   color: white;
   font-family: Roboto-Medium;
-  padding: 3px;
-  border: 0px;
+  font-size: 15px;
 }
 
-.container_config_counter {
-  color: white;
-}
-
-#next {
-  background-color: #062e63;
-  color: white;
-  padding: 20px;
-  border: transparent 0px;
-}
-
-#next:hover {
+.config_item button:hover {
   background-color: #3F3F41;
 }
 
@@ -110,8 +137,6 @@ body {
   color: #CCCCCC;
 }
 
-.container_status {
-  font-family: Roboto-Regular;
-  color: rgb(219, 31, 31);
-  margin: 10px;
+#restart_str {
+  margin-top: 10px;
 }
