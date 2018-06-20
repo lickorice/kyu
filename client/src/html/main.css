@@ -1,3 +1,12 @@
+:root {
+  --color-neutral:  #143b6e;
+  --color-dark:     #062e63;
+  --color-darker:   #05254f;
+  --text-visible-1: #5d8ecd;
+  --text-visible-2: #ffffff;
+  --button-hover:   #28548e;
+}
+
 @font-face {
   font-family: "Roboto-Regular";
   src: url(fonts/Roboto-Regular.ttf);
@@ -16,9 +25,9 @@
 body {
   padding: 0px;
   margin: 0px;
-  background-color: #143b6e;
+  background-color: var(--color-neutral);
   font-family: "Roboto-Medium";
-  color: #5d8ecd;
+  color: var(--text-visible-1);
   text-align: center;
 }
 
@@ -27,7 +36,7 @@ body {
 }
 
 .container_current_number {
-  color: white;
+  color: var(--text-visible-2);
   font-family: "Roboto-Black";
   font-size: 50px;
   margin: 10px;
@@ -37,28 +46,19 @@ body {
   margin-top: 20px;
 }
 
-.container_config_dropdown select {
-  margin-top: 7px;
-  background-color: #062e63;
-  color: white;
-  font-family: Roboto-Medium;
-  padding: 3px;
-  border: 0px;
-}
-
 .container_config_counter {
-  color: white;
+  color: var(--text-visible-2);
 }
 
 #next {
-  background-color: #062e63;
-  color: white;
+  background-color: var(--color-dark);
+  color: var(--text-visible-2);
   padding: 20px;
   border: transparent 0px;
 }
 
 #next:hover {
-  background-color: #3F3F41;
+  background-color: var(--button-hover);
 }
 
 #title-bar {
@@ -66,9 +66,9 @@ body {
   height: 32px;
   padding: 0px;
   margin: 0px;
-  color: #ADADAD;
+  color: var(--text-visible-1);
   font-family: sans-serif;
-  background-color: #062e63;
+  background-color: var(--color-dark);
 }
 
 #title {
@@ -91,7 +91,7 @@ body {
   width: 32px;
   background-color: transparent;
   border: none;
-  color: #F1F1F1;
+  color: var(--text-visible-2);
   font-size: 16px;
 }
 
@@ -102,7 +102,7 @@ body {
 }
 
 #title-bar-btns button:hover {
-  background-color: #28548e;
+  background-color: var(--button-hover);
 }
 
 #content {
@@ -112,6 +112,6 @@ body {
 
 .container_status {
   font-family: Roboto-Regular;
-  color: rgb(219, 31, 31);
+  color: #db1f1f;
   margin: 10px;
 }

@@ -46,7 +46,7 @@ function refresh() {
     csts = document.getElementById('counter_sts_' + i);
     csts.innerHTML = 'CLOSED';
     csts.style.color = "#8a1c1c";
-    document.getElementById('customer_0' + i).style.color = "rgb(70, 70, 70)"
+    document.getElementById('customer_0' + i).style.color = "var(--color-neutral)"
     document.getElementById('customer_0' + i).innerHTML = "-";
   }
   socket.emit('connection-ping', {})
@@ -59,6 +59,28 @@ socket.on('server-refresh', function(data) {
 
 // Handle connection events:
 window.onload = function() {
+  // Clock:
+  function startTime() {
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    m = checkTime(m);
+    s = checkTime(s);
+    document.getElementById('time').innerHTML =
+      h + ":" + m + ":" + s;
+    var t = setTimeout(startTime, 500);
+  }
+
+  function checkTime(i) {
+    if (i < 10) {
+      i = "0" + i
+    }; // add zero in front of numbers < 10
+    return i;
+  }
+
+  startTime()
+
   socket.emit('connection-ping', {})
 }
 socket.on('server-confirm', function(data) {
@@ -66,8 +88,8 @@ socket.on('server-confirm', function(data) {
   csts = document.getElementById('counter_sts_' + cID);
   csts.innerHTML = 'NOW SERVING';
   csts.style.color = "#3cd763";
-  document.getElementById('customer_0' + cID).style.color = "#cdcdcd";
-  if(!counter_values[parseInt(cID) - 1]) document.getElementById('customer_0' + cID).innerHTML = '-';
+  document.getElementById('customer_0' + cID).style.color = "var(--text-visible-2)";
+  if (!counter_values[parseInt(cID) - 1]) document.getElementById('customer_0' + cID).innerHTML = '-';
   else document.getElementById('customer_0' + cID).innerHTML = counter_values[parseInt(cID) - 1];
 });
 
@@ -219,3 +241,21 @@ socket.on('full-restart', function(data) {
 
   counter_values = []
 });
+
+// Clock:
+function formatDate(date) {
+  var monthNames = [
+    "JANUARY", "FEBRUARY", "MARCH",
+    "APRIL", "MAY", "JUNE",
+    "JULY", "AUGUST", "SEPTEMBER",
+    "OCTOBER", "NOVEMBER", "DECEMBER"
+  ];
+
+  var day = date.getDate();
+  var monthIndex = date.getMonth();
+  var year = date.getFullYear();
+
+  return monthNames[monthIndex] + ' ' + day + ', ' + year;
+}
+
+document.getElementById('date').innerHTML = formatDate(new Date())

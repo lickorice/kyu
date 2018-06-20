@@ -29,12 +29,10 @@ var socket = io.connect('http://'+db.get('ip_address')+':2109')
 // Refresh function
 function refresh(){
   socket = io.connect('http://'+db.get('ip_address')+':2109')
-  if (db.get('current_customer') == 0) currentn.innerHTML = '-';
+  if (!db.get('current_customer') || db.get('current_customer') == 0) currentn.innerHTML = '-';
   else currentn.innerHTML = db.get('current_customer');
   counter.innerHTML = "Counter " + db.get('current_counter');
 }
-
-refresh();
 
 // Emit a counter event
 btn_next.addEventListener('click', function() {
@@ -43,6 +41,12 @@ btn_next.addEventListener('click', function() {
     counterID: cur_cnt
   });
 });
+
+socket.on('connect', function(){
+  if (!db.get('current_customer') || db.get('current_customer') == 0) currentn.innerHTML = '-';
+  else currentn.innerHTML = db.get('current_customer');
+  counter.innerHTML = "Counter " + db.get('current_counter');
+})
 
 // Listens for connection
 socket.on('connection-ping', function(data){
@@ -68,6 +72,14 @@ socket.on('full-restart', function(data){
   currentn.innerHTML = '-';
 });
 
+// Listens for disconnection
+socket.on('disconnect', function(){
+  var status = document.getElementById('status');
+  status.innerHTML = "DISCONNECTED";
+  status.style.color = "#db1f1f";
+
+  socket.emit('connection-confirm', {counterID:"00"+db.get('current_counter')});
+});
 
 // Title bar aux
 const remote = require('electron').remote
