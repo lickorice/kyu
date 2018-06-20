@@ -18,6 +18,8 @@ var io = socket(server);
 io.on('connection', function(socket){
   console.log(lstr + 'Connection established with ID: ' + socket.id);
 
+  socket.emit('connection', {});
+
   socket.on('next', function(data){
     io.sockets.emit('next', data)
   })

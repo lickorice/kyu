@@ -78,7 +78,7 @@ body {
 #title-bar-btns {
   -webkit-app-region: no-drag;
   position: fixed;
-  top: 1px;
+  top: 0px;
   right: 0px;
 }
 
@@ -91,6 +91,12 @@ body {
   font-size: 16px;
 }
 
+#title-bar-btns img {
+  height: 10px;
+  width: 10px;
+  border: none;
+}
+
 #title-bar-btns button:hover {
   background-color: #3F3F41;
 }
@@ -98,4 +104,10 @@ body {
 #content {
   padding: 12px;
   color: #CCCCCC;
+}
+
+.container_status {
+  font-family: Roboto-Regular;
+  color: rgb(219, 31, 31);
+  margin: 10px;
 }
