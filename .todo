@@ -13,7 +13,7 @@
   ✔ add settings tab for client side @done(2018-06-20 16:02) @project(1.0.0 stable)
     ✔ editable ip address (?) @done(2018-06-20 16:02) @project(1.0.0 stable)
     ✔ editable counter index @done(2018-06-20 16:02) @project(1.0.0 stable)
-  ☐ attempt to add audio
+  ✔ attempt to add audio @done(2018-06-21 00:44) @project(1.0.0 stable)
 
   raspi intergration:
     ☐ configure program at startup

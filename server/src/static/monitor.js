@@ -1,16 +1,10 @@
 // Open socket connection:
 var socket = io.connect('http://localhost:2109')
 
-// Handle DOM:
-var customer_number_1 = document.getElementById('customer_01');
-var customer_number_2 = document.getElementById('customer_02');
-var customer_number_3 = document.getElementById('customer_03');
-var customer_number_4 = document.getElementById('customer_04');
-var customer_number_5 = document.getElementById('customer_05');
-var customer_number_6 = document.getElementById('customer_06');
-var customer_number_7 = document.getElementById('customer_07');
+const valid_counters = ['001', '002', '003', '004', '005', '006', '007'];
 
 var counter_values = []
+var queue_numbers = []
 
 socket.on('load-data', function(data) {
   console.log(data);
@@ -33,6 +27,7 @@ socket.on('load-data', function(data) {
 });
 
 function arrayInit() {
+  queue_numbers = []
   for (i = 0; i <= 79; i++) {
     queue_numbers.push(80 - i);
   }
@@ -83,6 +78,8 @@ window.onload = function() {
 
   socket.emit('connection-ping', {})
 }
+
+// on ping confirmation:
 socket.on('server-confirm', function(data) {
   cID = data.counterID.substr(data.counterID.length - 1);
   csts = document.getElementById('counter_sts_' + cID);
@@ -93,143 +90,53 @@ socket.on('server-confirm', function(data) {
   else document.getElementById('customer_0' + cID).innerHTML = counter_values[parseInt(cID) - 1];
 });
 
+function checkEmpty(array) {
+  if (array === undefined || array.length == 0) {
+    arrayInit();
+  }
+}
+
+function handleQueue(counterID) {
+  checkEmpty(queue_numbers);
+  nextinline = queue_numbers.pop();
+  cID = counterID.substr(counterID.length - 1);
+  document.getElementById('customer_0'+cID).innerHTML = nextinline;
+
+  counter_values[parseInt(cID) - 1] = nextinline;
+
+  socket.emit('callback', {
+    counterID: counterID,
+    counterServing: nextinline
+  });
+  socket.emit('save-counter', {
+    counterID: counterID,
+    current_customer: nextinline
+  })
+  counter_values[0] = nextinline
+  socket.emit('save-array', {
+    array: queue_numbers
+  });
+
+  // Effects:
+  var audio = new Audio('assets/notification.mp3');
+  audio.play();
+
+  var target = document.getElementById('customer_0'+cID)
+  var times = 0
+  var flasher = setInterval(function(){
+    if(times == 11) clearInterval(flasher);
+    target.style.textShadow = (target.style.textShadow == 'green 0px 0px 10px' ? 'black 0px 0px 10px' : 'green 0px 0px 10px');
+    console.log(target.style.color)
+    console.log(target.style.textShadow)
+    times++;
+  }, 500);
+}
+
 // Listen for counter events:
 socket.on('next', function(data) {
   console.log('[ -SVR ] Calling for "next" method. ID: ' + data.counterID)
-  switch (data.counterID) {
-    case '001':
-      checkEmpty(queue_numbers);
-      nextinline = queue_numbers.pop();
-      customer_number_1.innerHTML = nextinline;
-      socket.emit('callback', {
-        counterID: '001',
-        counterServing: nextinline
-      });
-      socket.emit('save-counter', {
-        counterID: data.counterID,
-        current_customer: nextinline
-      })
-      counter_values[0] = nextinline
-      socket.emit('save-array', {
-        array: queue_numbers
-      });
-      break;
-    case '002':
-      checkEmpty(queue_numbers);
-      nextinline = queue_numbers.pop();
-      customer_number_2.innerHTML = nextinline;
-      socket.emit('callback', {
-        counterID: '002',
-        counterServing: nextinline
-      });
-      socket.emit('save-counter', {
-        counterID: data.counterID,
-        current_customer: nextinline
-      })
-      counter_values[1] = nextinline
-      socket.emit('save-array', {
-        array: queue_numbers
-      });
-      break;
-    case '003':
-      checkEmpty(queue_numbers);
-      nextinline = queue_numbers.pop();
-      customer_number_3.innerHTML = nextinline;
-      socket.emit('callback', {
-        counterID: '003',
-        counterServing: nextinline
-      });
-      socket.emit('save-counter', {
-        counterID: data.counterID,
-        current_customer: nextinline
-      })
-      counter_values[2] = nextinline
-      socket.emit('save-array', {
-        array: queue_numbers
-      });
-      break;
-    case '004':
-      checkEmpty(queue_numbers);
-      nextinline = queue_numbers.pop();
-      customer_number_4.innerHTML = nextinline;
-      socket.emit('callback', {
-        counterID: '004',
-        counterServing: nextinline
-      });
-      socket.emit('save-counter', {
-        counterID: data.counterID,
-        current_customer: nextinline
-      })
-      counter_values[3] = nextinline
-      socket.emit('save-array', {
-        array: queue_numbers
-      });
-      break;
-    case '005':
-      checkEmpty(queue_numbers);
-      nextinline = queue_numbers.pop();
-      customer_number_5.innerHTML = nextinline;
-      socket.emit('callback', {
-        counterID: '005',
-        counterServing: nextinline
-      });
-      socket.emit('save-counter', {
-        counterID: data.counterID,
-        current_customer: nextinline
-      })
-      counter_values[4] = nextinline
-      socket.emit('save-array', {
-        array: queue_numbers
-      });
-      break;
-    case '006':
-      checkEmpty(queue_numbers);
-      nextinline = queue_numbers.pop();
-      customer_number_6.innerHTML = nextinline;
-      socket.emit('callback', {
-        counterID: '006',
-        counterServing: nextinline
-      });
-      socket.emit('save-counter', {
-        counterID: data.counterID,
-        current_customer: nextinline
-      })
-      counter_values[5] = nextinline
-      socket.emit('save-array', {
-        array: queue_numbers
-      });
-      break;
-    case '007':
-      checkEmpty(queue_numbers);
-      nextinline = queue_numbers.pop();
-      customer_number_7.innerHTML = nextinline;
-      socket.emit('callback', {
-        counterID: '007',
-        counterServing: nextinline
-      });
-      socket.emit('save-counter', {
-        counterID: data.counterID,
-        current_customer: nextinline
-      })
-      counter_values[6] = nextinline
-      socket.emit('save-array', {
-        array: queue_numbers
-      });
-      break;
-    default:
-      socket.emit('save-array', {
-        array: queue_numbers
-      })
-      break;
-
-  }
-
-  function checkEmpty(array) {
-    if (array === undefined || array.length == 0) {
-      arrayInit();
-    }
-  }
-})
+  if (valid_counters.includes(data.counterID)) handleQueue(data.counterID);
+});
 
 socket.on('full-restart', function(data) {
   console.log("restarting(3/3)");

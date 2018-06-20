@@ -17,7 +17,7 @@ ipcMain.on('show-preferences', function() {
   prefWindow = new BrowserWindow({
     width: 500,
     height: 300,
-    // resizable: false,
+    resizable: false,
     frame: false
   });
   prefWindow.loadURL(url.format({
@@ -38,7 +38,7 @@ app.on('ready', function() {
   mainWindow = new BrowserWindow({
     width: 300,
     height: 400,
-    // resizable: false,
+    resizable: false,
     frame: false
   });
 
