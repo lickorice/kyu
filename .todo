@@ -1,7 +1,19 @@
 1.0.0 release alpha:
   ✔ develop client and server side socket based communication system @done(2018-06-18 17:19) @project(1.0.0 release alpha)
   ✔ integrate to electron @done(2018-06-18 17:19) @project(1.0.0 release alpha)
-  ☐ futher develop for six counters
-  ☐ fix css styling
+  ✔ futher develop for six counters @done(2018-06-20 01:42) @project(1.0.0 release alpha)
+  ✔ fix css styling @done(2018-06-20 01:42) @project(1.0.0 release alpha)
+1.0.0 stable:
+  ☐ remove hardcoding, transfer to json config file
+      ☐ develop a controller for the server
+        ☐ develop persistent queueing
+        ☐ add reset button
+        ☐ edit number of counters
+  ☐ add settings tab for client side
+    ☐ editable ip address (?)
+    ☐ editable counter index
   ☐ attempt to add audio
-  ☐ remove hardcoding
+
+  raspi intergration:
+    ☐ configure program at startup
+    ☐ beautify
