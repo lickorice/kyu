@@ -1,5 +1,3 @@
-.todo
-
 server/src/node_modules
 server/src/yarn.lock
 client/src/node_modules
