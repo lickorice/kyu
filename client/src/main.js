@@ -38,7 +38,7 @@ app.on('ready', function() {
   mainWindow = new BrowserWindow({
     width: 300,
     height: 400,
-    resizable: false,
+    // resizable: false,
     frame: false
   });
 
@@ -51,7 +51,6 @@ app.on('ready', function() {
     protocol: 'file:',
     slashes: true
   }));
-
 
   // quit when closed
   mainWindow.on('closed', function() {

@@ -147,6 +147,10 @@ socket.on('full-restart', function(data) {
   arrayInit();
 
   counter_values = []
+
+  // Effects:
+  var audio = new Audio('assets/notification-restart.mp3');
+  audio.play();
 });
 
 // Clock:

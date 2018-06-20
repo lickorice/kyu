@@ -6,12 +6,26 @@ var btn_next = document.getElementById('next');
 var currentn = document.getElementById('current_number');
 var counter = document.getElementById('counter');
 
+
+var fs = require('fs');
+var dir = 'config/';
+
+if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
+}
+
+fs.writeFile('config/config.json', '', { flag: 'wx' }, function (err) {
+    if (err) throw err;
+    console.log("It's saved!");
+});
+
 // Handle DB:
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 
 const adapter = new FileSync('config/config.json');
 const db = low(adapter);
+
 
 // Initialize DB:
 db.defaults(

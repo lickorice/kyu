@@ -72,8 +72,6 @@ img {
   height: 307px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  align-content: center;
   justify-content: center;
 }
 

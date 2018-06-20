@@ -2,3 +2,5 @@ server/src/node_modules
 server/src/yarn.lock
 client/src/node_modules
 client/src/yarn.lock
+
+client/bin
