@@ -18,7 +18,11 @@ var btn_rest = document.getElementById('restart');
 // Init counter dropdown
 for(i = 1; i <= db.get('max_counters'); i++){
   var option = document.createElement('option');
-  option.innerHTML = "Counter 00"+i
+  if(i == 7){
+    option.innerHTML = "Counter 007 - Others";
+  } else {
+    option.innerHTML = "Counter 00"+i;
+  }
   option.setAttribute("value", "00"+i)
 
   if(i == db.get('current_counter')){

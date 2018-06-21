@@ -5,10 +5,12 @@ const valid_counters = ['001', '002', '003', '004', '005', '006', '007'];
 
 var counter_values = []
 var queue_numbers = []
+var queue_numbers_others = []
 
 socket.on('load-data', function(data) {
   console.log(data);
   queue_numbers = data.current_array;
+  queue_numbers_others = data.current_array_others;
 
   for (i = 1; i <= 7; i++) {
     console.log(data.counter[i - 1]);
@@ -28,11 +30,18 @@ socket.on('load-data', function(data) {
 
 function arrayInit() {
   queue_numbers = []
+  queue_numbers_others = []
   for (i = 0; i <= 79; i++) {
     queue_numbers.push(80 - i);
   }
+  for (i = 0; i <= 49; i++) {
+    queue_numbers_others.push(150 - i);
+  }
   socket.emit('save-array', {
     array: queue_numbers
+  })
+  socket.emit('save-array-others', {
+    array: queue_numbers_others
   })
 }
 
@@ -97,10 +106,16 @@ function checkEmpty(array) {
 }
 
 function handleQueue(counterID) {
-  checkEmpty(queue_numbers);
-  nextinline = queue_numbers.pop();
+  if (counterID == '007') {
+    checkEmpty(queue_numbers_others);
+    var nextinline = queue_numbers_others.pop();
+  } else {
+    checkEmpty(queue_numbers);
+    var nextinline = queue_numbers.pop();
+  }
+  
   cID = counterID.substr(counterID.length - 1);
-  document.getElementById('customer_0'+cID).innerHTML = nextinline;
+  document.getElementById('customer_0' + cID).innerHTML = nextinline;
 
   counter_values[parseInt(cID) - 1] = nextinline;
 
@@ -112,19 +127,24 @@ function handleQueue(counterID) {
     counterID: counterID,
     current_customer: nextinline
   })
-  counter_values[0] = nextinline
-  socket.emit('save-array', {
-    array: queue_numbers
-  });
+  if (counterID == '007') {
+    socket.emit('save-array', {
+      array: queue_numbers
+    });
+  } else {
+    socket.emit('save-array-others', {
+      array: queue_numbers_others
+    });
+  }
 
   // Effects:
   var audio = new Audio('assets/notification.mp3');
   audio.play();
 
-  var target = document.getElementById('customer_0'+cID)
+  var target = document.getElementById('customer_0' + cID)
   var times = 0
-  var flasher = setInterval(function(){
-    if(times == 11) clearInterval(flasher);
+  var flasher = setInterval(function() {
+    if (times == 11) clearInterval(flasher);
     target.style.textShadow = (target.style.textShadow == 'green 0px 0px 10px' ? 'black 0px 0px 10px' : 'green 0px 0px 10px');
     console.log(target.style.color)
     console.log(target.style.textShadow)
