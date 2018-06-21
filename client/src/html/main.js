@@ -74,7 +74,7 @@ socket.on('connection-ping', function(data){
 
 // Listens for callback
 socket.on('callback', function(data){
-  if(data.counterID == "00" + db.get('current_counter')){
+  if(data.counterID = "00" + db.get('current_counter')){
     currentn.innerHTML = data.counterServing;
     db.set('current_customer', data.counterServing).write();
     console.log(data.counterServing);
