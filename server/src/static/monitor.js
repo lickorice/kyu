@@ -64,26 +64,20 @@ socket.on('server-refresh', function(data) {
 // Handle connection events:
 window.onload = function() {
   // Clock:
-  function startTime() {
-    var today = new Date();
-    var h = today.getHours();
-    var m = today.getMinutes();
-    var s = today.getSeconds();
-    m = checkTime(m);
-    s = checkTime(s);
-    document.getElementById('time').innerHTML =
-      h + ":" + m + ":" + s;
-    var t = setTimeout(startTime, 500);
+
+  function formatAMPM() {
+    var date = new Date();
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'P.M.' : 'A.M.';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    document.getElementById('time').innerHTML = hours + ':' + minutes + ' ' + ampm;
+    var t = setTimeout(formatAMPM, 500);
   }
 
-  function checkTime(i) {
-    if (i < 10) {
-      i = "0" + i
-    }; // add zero in front of numbers < 10
-    return i;
-  }
-
-  startTime()
+  formatAMPM();
 
   socket.emit('connection-ping', {})
 }
@@ -113,7 +107,7 @@ function handleQueue(counterID) {
     checkEmpty(queue_numbers);
     var nextinline = queue_numbers.pop();
   }
-  
+
   cID = counterID.substr(counterID.length - 1);
   document.getElementById('customer_0' + cID).innerHTML = nextinline;
 
@@ -145,7 +139,9 @@ function handleQueue(counterID) {
   var times = 0
   var flasher = setInterval(function() {
     if (times == 11) clearInterval(flasher);
-    target.style.textShadow = (target.style.textShadow == 'green 0px 0px 10px' ? 'black 0px 0px 10px' : 'green 0px 0px 10px');
+    target.style.textShadow = (target.style.textShadow == 'var(--text-flashing) 0px 0px 1vh' ? 'black 0px 0px 1vh' : 'var(--text-flashing) 0px 0px 1vh');
+    console.log(target.style.textShadow)
+    target.style.color = (target.style.color == 'var(--text-visible-2)' ? 'var(--text-flashing)' : 'var(--text-visible-2)');
     console.log(target.style.color)
     console.log(target.style.textShadow)
     times++;
@@ -175,18 +171,14 @@ socket.on('full-restart', function(data) {
 
 // Clock:
 function formatDate(date) {
-  var monthNames = [
-    "JANUARY", "FEBRUARY", "MARCH",
-    "APRIL", "MAY", "JUNE",
-    "JULY", "AUGUST", "SEPTEMBER",
-    "OCTOBER", "NOVEMBER", "DECEMBER"
-  ];
-
+  var monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var dayWeek = dayNames[date.getDay()];
   var day = date.getDate();
   var monthIndex = date.getMonth();
   var year = date.getFullYear();
 
-  return monthNames[monthIndex] + ' ' + day + ', ' + year;
+  return 'Today is ' + dayWeek + ', ' + monthNames[monthIndex] + ' ' + day + ', ' + year;
 }
 
 document.getElementById('date').innerHTML = formatDate(new Date())

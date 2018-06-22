@@ -2,5 +2,5 @@
   "current_counter": 1,
   "current_customer": 1,
   "max_counters": 7,
-  "ip_address": "192.168.254.111"
+  "ip_address": "localhost"
 }
