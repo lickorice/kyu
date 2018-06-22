@@ -3,14 +3,14 @@ raspi intergration:
     ☐ beautify
 1.1.0 stable:
   ✔ custom ECPAY/others counter with own queue @done(2018-06-21 15:13) @project(1.1.0 stable)
-  ☐ add marquee
-  ☐ layout header section properly
+  ✔ add marquee @done(2018-06-22 17:03) @project(1.1.0 stable)
+  ✔ layout header section properly @done(2018-06-22 17:03) @project(1.1.0 stable)
   ☐ add ftp functionality
-    ☐ exchange rate
-    ☐ advertisements
-    ☐ videos
-  ☐ add alerts
-  ☐ fix layout***
+    ✔ exchange rate @done(2018-06-22 17:03) @project(1.1.0 stable)
+    ✔ advertisements @done(2018-06-22 17:03) @project(1.1.0 stable)
+    ✔ videos @done(2018-06-22 17:03) @project(1.1.0 stable)
+  ✔ add alerts @done(2018-06-22 17:03) @project(1.1.0 stable)
+  ✔ fix layout*** @done(2018-06-22 17:03) @project(1.1.0 stable)
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:

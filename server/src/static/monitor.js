@@ -3,17 +3,20 @@ var socket = io.connect('http://localhost:2109')
 
 const valid_counters = ['001', '002', '003', '004', '005', '006', '007'];
 
-var counter_values = []
-var queue_numbers = []
-var queue_numbers_others = []
+var counter_values = [];
+let queue_numbers = [];
+let queue_numbers_others = [];
+
+let videoArray = [];
+let photoArray = [];
+let cur_videoArray = [];
+let cur_photoArray = [];
 
 socket.on('load-data', function(data) {
-  console.log(data);
   queue_numbers = data.current_array;
   queue_numbers_others = data.current_array_others;
 
   for (i = 1; i <= 7; i++) {
-    console.log(data.counter[i - 1]);
     document.getElementById('customer_0' + i).innerHTML = '-';
   }
 
@@ -26,6 +29,18 @@ socket.on('load-data', function(data) {
     data.counter[5],
     data.counter[6],
   ]
+
+  videoArray = data.video_array;
+  cur_videoArray = data.video_array;
+  photoArray = data.photo_array;
+  cur_photoArray = data.photo_array;
+
+  console.log(data.current_array)
+  console.log(data.current_array_others)
+  console.log(data.counter)
+  console.log(data.scroll_text)
+  // FIT TO SCROLLBAR:
+  document.getElementById('scrolling').innerHTML = data.scroll_text
 });
 
 function arrayInit() {
@@ -40,6 +55,26 @@ function arrayInit() {
   socket.emit('save-array', {
     array: queue_numbers
   })
+  socket.emit('save-array-others', {
+    array: queue_numbers_others
+  })
+}
+
+function arrayInitMain() {
+  queue_numbers = []
+  for (i = 0; i <= 79; i++) {
+    queue_numbers.push(80 - i);
+  }
+  socket.emit('save-array', {
+    array: queue_numbers
+  })
+}
+
+function arrayInitOthers() {
+  queue_numbers_others = []
+  for (i = 0; i <= 49; i++) {
+    queue_numbers_others.push(150 - i);
+  }
   socket.emit('save-array-others', {
     array: queue_numbers_others
   })
@@ -95,13 +130,19 @@ socket.on('server-confirm', function(data) {
 
 function checkEmpty(array) {
   if (array === undefined || array.length == 0) {
-    arrayInit();
+    arrayInitMain();
+  }
+}
+
+function checkEmptyOthers(array) {
+  if (array === undefined || array.length == 0) {
+    arrayInitOthers();
   }
 }
 
 function handleQueue(counterID) {
   if (counterID == '007') {
-    checkEmpty(queue_numbers_others);
+    checkEmptyOthers(queue_numbers_others);
     var nextinline = queue_numbers_others.pop();
   } else {
     checkEmpty(queue_numbers);
@@ -113,6 +154,9 @@ function handleQueue(counterID) {
 
   counter_values[parseInt(cID) - 1] = nextinline;
 
+  document.getElementById("overlaynumber").innerHTML = nextinline;
+  document.getElementById("overlaycounter").innerHTML = "Counter " + cID;
+
   socket.emit('callback', {
     counterID: counterID,
     counterServing: nextinline
@@ -122,16 +166,30 @@ function handleQueue(counterID) {
     current_customer: nextinline
   })
   if (counterID == '007') {
-    socket.emit('save-array', {
-      array: queue_numbers
-    });
-  } else {
     socket.emit('save-array-others', {
       array: queue_numbers_others
+    });
+  } else {
+    socket.emit('save-array', {
+      array: queue_numbers
     });
   }
 
   // Effects:
+  // Lower volume
+  var videoPlayerJ = $('#videoPlayer')
+  var overlayJ = $('#overlay')
+  var overlaytextJ = $('#overlaytext')
+  videoPlayerJ.animate({
+    volume: 0.2
+  }, 1000).delay(5000);
+  overlayJ.animate({
+    'background-color': 'rgba(0, 0, 0, 0.9)'
+  }, 1000).delay(5000)
+  overlaytextJ.animate({
+    'color': 'rgba(255, 255, 255, 1.0)'
+  }, 1000).delay(5000)
+  // Play sfx
   var audio = new Audio('assets/notification.mp3');
   audio.play();
 
@@ -140,22 +198,27 @@ function handleQueue(counterID) {
   var flasher = setInterval(function() {
     if (times == 11) clearInterval(flasher);
     target.style.textShadow = (target.style.textShadow == 'var(--text-flashing) 0px 0px 1vh' ? 'black 0px 0px 1vh' : 'var(--text-flashing) 0px 0px 1vh');
-    console.log(target.style.textShadow)
     target.style.color = (target.style.color == 'var(--text-visible-2)' ? 'var(--text-flashing)' : 'var(--text-visible-2)');
-    console.log(target.style.color)
-    console.log(target.style.textShadow)
     times++;
   }, 500);
+
+  videoPlayerJ.animate({
+    volume: 1.0
+  }, 1000);
+  overlayJ.animate({
+    'background-color': 'rgba(0, 0, 0, 0)'
+  }, 1000)
+  overlaytextJ.animate({
+    'color': 'rgba(255, 255, 255, 0.0)'
+  }, 1000)
 }
 
 // Listen for counter events:
 socket.on('next', function(data) {
-  console.log('[ -SVR ] Calling for "next" method. ID: ' + data.counterID)
   if (valid_counters.includes(data.counterID)) handleQueue(data.counterID);
 });
 
 socket.on('full-restart', function(data) {
-  console.log("restarting(3/3)");
 
   for (i = 1; i <= 7; i++) {
     document.getElementById('customer_0' + i).innerHTML = '-';
@@ -171,8 +234,8 @@ socket.on('full-restart', function(data) {
 
 // Clock:
 function formatDate(date) {
-  var monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  var dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  var dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   var dayWeek = dayNames[date.getDay()];
   var day = date.getDate();
   var monthIndex = date.getMonth();
@@ -182,3 +245,14 @@ function formatDate(date) {
 }
 
 document.getElementById('date').innerHTML = formatDate(new Date())
+
+// Video controls:
+var videoPlayer = document.getElementById('videoPlayer');
+videoPlayer.onended = function() {
+  if (cur_videoArray === undefined || cur_videoArray.length == 0) {
+    cur_videoArray = videoArray;
+    videoPlayer.src = "shared/default/SMPI.mov";
+  } else {
+    videoPlayer.src = "shared/videos/" + cur_videoArray.pop();
+  }
+}

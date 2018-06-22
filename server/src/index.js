@@ -36,6 +36,34 @@ express_app.use(express.static('static'));
 // Open sockets:
 var io = socket(server);
 
+// Loads local file dependencies:
+let scrolltext;
+fs = require('fs')
+fs.readFile('./static/shared/scrolling-text.txt', 'utf8', function (err,data) {
+  if (err) {
+    return console.log(err);
+  }
+  scrolltext = data;
+});
+
+// Handle videos
+let videoArray = [];
+fs.readdir('./static/shared/videos/', (err, files) => {
+  files.forEach(file => {
+    console.log(file);
+    videoArray.push(file);
+  });
+})
+
+// Handle photos
+let photoArray = [];
+fs.readdir('./static/shared/photos/', (err, files) => {
+  files.forEach(file => {
+    console.log(file);
+    photoArray.push(file);
+  });
+})
+
 io.on('connection', function(socket) {
   console.log(lstr + 'Connection established with ID: ' + socket.id);
 
@@ -51,7 +79,10 @@ io.on('connection', function(socket) {
     ],
     current_array: db.get('current_array'),
     current_array_others: db.get('current_array_others'),
-  })
+    scroll_text: scrolltext,
+    photo_array: photoArray,
+    video_array: videoArray
+  });
 
   socket.emit('connection-ping', {});
   socket.on('connection-ping', function(data) {

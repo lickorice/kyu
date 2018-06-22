@@ -6,6 +6,8 @@
   <title>SMPi Queueing System</title>
   <link rel="stylesheet" href="/css/master.css">
   <script type="text/javascript" src="/socket.io.dev.js"></script>
+  <script type="text/javascript" src="/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="/jquery-ui.min.js"></script>
 </head>
 
 <body>
@@ -164,13 +166,38 @@
       </div>
 
       <div class="container_misc_misc" id="miscmisc">
-        PLACEHOLDER
+        <div class="container_videoPlayer">
+          <div class="container_video">
+          <video id="videoPlayer" src="shared/default/SMPI.mov" autoplay autobuffer></video>
+          </div>
+          <div id="overlay">
+            <div id="overlaytext">
+            NOW SERVING <br>
+            <span id="overlaynumber">NUMBER</span><br>
+            <span id="overlaycounter">COUNTER NUMBER</span><br>
+            </div>
+          </div>
+        </div>
+        <div class="container_image_master">
+          <div class="container_image_stuff">
+            <img src="shared/default/sample-1.png" alt="">
+          </div>
+          <div class="container_image_stuff">
+            <img src="shared/default/sample-2.png" alt="">
+          </div>
+          <div class="container_image_stuff">
+            <img src="shared/default/sample-3.png" alt="">
+          </div>
+          <div class="container_image_stuff">
+            <img src="shared/default/sample-4.png" alt="">
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="container_master_footer">
-    asd
+    <p class="marquee"><span id="scrolling">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></p>
   </div>
 
   <!-- js script -->
