@@ -4,5 +4,3 @@ client/src/node_modules
 client/src/yarn.lock
 
 client/bin
-
-server/src/static/shared

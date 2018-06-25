@@ -1,6 +1,6 @@
 {
-  "current_counter": 5,
-  "current_customer": 25,
+  "current_counter": 4,
+  "current_customer": 42,
   "max_counters": 7,
   "ip_address": "localhost"
 }
