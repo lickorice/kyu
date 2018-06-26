@@ -50,14 +50,15 @@ body {
   color: var(--text-visible-2);
 }
 
-#next {
+.container_next button {
   background-color: var(--color-dark);
   color: var(--text-visible-2);
   padding: 20px;
   border: transparent 0px;
+  margin-bottom: 3vh;
 }
 
-#next:hover {
+.container_next button:hover {
   background-color: var(--button-hover);
 }
 

@@ -3,6 +3,7 @@ const {ipcRenderer} = require('electron')
 
 // Handle DOM:
 var btn_next = document.getElementById('next');
+var btn_repeat = document.getElementById('repeat');
 var currentn = document.getElementById('current_number');
 var counter = document.getElementById('counter');
 
@@ -52,6 +53,13 @@ function refresh(){
 btn_next.addEventListener('click', function() {
   cur_cnt = "00" + db.get('current_counter');
   socket.emit('next', {
+    counterID: cur_cnt
+  });
+});
+
+btn_repeat.addEventListener('click', function() {
+  cur_cnt = "00" + db.get('current_counter');
+  socket.emit('repeat', {
     counterID: cur_cnt
   });
 });

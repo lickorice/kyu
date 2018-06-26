@@ -37,7 +37,7 @@ app.on('ready', function() {
   // init main window
   mainWindow = new BrowserWindow({
     width: 300,
-    height: 400,
+    height: 475,
     // resizable: false,
     frame: false
   });

@@ -4,6 +4,7 @@
   --color-darker: #05254f;
   --text-visible-1: #5d8ecd;
   --text-visible-2: #ffffff;
+  --text-visible-2-1: #ffff00;
   --text-flashing: #93f27c;
   --button-hover: #28548e;
 }
@@ -78,7 +79,7 @@ img {
 
 .container_counter_number {
   font-family: Roboto-Black;
-  font-size: 7.5vh;
+  font-size: 7.2vh;
   color: var(--text-visible-2);
 }
 
@@ -102,7 +103,7 @@ img {
 
 .container_customer_number {
   font-family: Roboto-Black;
-  font-size: 7.5vh;
+  font-size: 7.2vh;
   color: var(--color-neutral);
 }
 
@@ -185,7 +186,6 @@ img {
 .container_master_footer {
   margin-left: 3vh;
   margin-right: 3vh;
-  min-height: 5vh;
   background-color: var(--color-dark);
   border-radius: 2vh;
   box-shadow: inset 0 0 2vh rgba(8, 8, 8, 0.51);
@@ -195,10 +195,10 @@ img {
 
 .marquee {
   font-family: Inconsolata-Bold;
-  font-size: 2vh;
+  font-size: 3.5vh;
   color: var(--text-visible-2);
   white-space: nowrap;
-  margin: 0, auto;
+  margin: 1.5vh;
   overflow: hidden;
 }
 

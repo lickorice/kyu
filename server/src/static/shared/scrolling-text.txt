@@ -1,4 +1,4 @@
-|   USD : 53.357
+|   Bills payment accepted here|   USD : 53.357
 |   EUR : 62.081
 |   GBP : 70.832
 |   INR : 00.787

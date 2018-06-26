@@ -99,6 +99,10 @@ io.on('connection', function(socket) {
     io.sockets.emit('next', data);
   })
 
+  socket.on('repeat', function(data) {
+    io.sockets.emit('repeat', data);
+  })
+
   socket.on('callback', function(data) {
     io.sockets.emit('callback', data);
   })

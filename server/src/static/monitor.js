@@ -30,10 +30,10 @@ socket.on('load-data', function(data) {
     data.counter[6],
   ]
 
-  videoArray = data.video_array;
-  cur_videoArray = data.video_array;
-  photoArray = data.photo_array;
-  cur_photoArray = data.photo_array;
+  videoArray = data.video_array.slice();
+  cur_videoArray = data.video_array.slice();
+  photoArray = data.photo_array.slice();
+  cur_photoArray = data.photo_array.slice();
 
   console.log(data.current_array)
   console.log(data.current_array_others)
@@ -115,6 +115,34 @@ window.onload = function() {
   formatAMPM();
 
   socket.emit('connection-ping', {})
+
+  // Photo controls:
+  var photo_1 = document.getElementById('image1');
+  var photo_2 = document.getElementById('image2');
+  var photo_3 = document.getElementById('image3');
+  var photo_4 = document.getElementById('image4');
+
+  function changePhoto(photoElement) {
+    console.log('tes')
+    console.log(cur_photoArray)
+    console.log(photoArray)
+    if (cur_photoArray === undefined || cur_photoArray.length == 0) {
+      cur_photoArray = photoArray.slice();
+      photoElement.src = "shared/photos/sample-2.png";
+    } else {
+    photoElement.src = "shared/photos/" + cur_photoArray.pop();
+    }
+  }
+
+  setInterval(function(){
+    changePhoto(photo_2);
+  }, 6000);
+  setInterval(function(){
+    changePhoto(photo_3);
+  }, 7000);
+  setInterval(function(){
+    changePhoto(photo_4);
+  }, 8000);
 }
 
 // on ping confirmation:
@@ -123,7 +151,7 @@ socket.on('server-confirm', function(data) {
   csts = document.getElementById('counter_sts_' + cID);
   csts.innerHTML = 'NOW SERVING';
   csts.style.color = "#3cd763";
-  document.getElementById('customer_0' + cID).style.color = "var(--text-visible-2)";
+  document.getElementById('customer_0' + cID).style.color = "var(--text-visible-2-1)";
   if (!counter_values[parseInt(cID) - 1]) document.getElementById('customer_0' + cID).innerHTML = '-';
   else document.getElementById('customer_0' + cID).innerHTML = counter_values[parseInt(cID) - 1];
 });
@@ -182,13 +210,13 @@ function handleQueue(counterID) {
   var overlaytextJ = $('#overlaytext')
   videoPlayerJ.animate({
     volume: 0.2
-  }, 1000).delay(5000);
+  }, 1000).delay(2000);
   overlayJ.animate({
     'background-color': 'rgba(0, 0, 0, 0.9)'
-  }, 1000).delay(5000)
+  }, 1000).delay(2000)
   overlaytextJ.animate({
     'color': 'rgba(255, 255, 255, 1.0)'
-  }, 1000).delay(5000)
+  }, 1000).delay(2000)
   // Play sfx
   var audio = new Audio('assets/notification.mp3');
   audio.play();
@@ -196,9 +224,55 @@ function handleQueue(counterID) {
   var target = document.getElementById('customer_0' + cID)
   var times = 0
   var flasher = setInterval(function() {
-    if (times == 11) clearInterval(flasher);
+    if (times == 5) clearInterval(flasher);
     target.style.textShadow = (target.style.textShadow == 'var(--text-flashing) 0px 0px 1vh' ? 'black 0px 0px 1vh' : 'var(--text-flashing) 0px 0px 1vh');
-    target.style.color = (target.style.color == 'var(--text-visible-2)' ? 'var(--text-flashing)' : 'var(--text-visible-2)');
+    target.style.color = (target.style.color == 'var(--text-visible-2-1)' ? 'var(--text-flashing)' : 'var(--text-visible-2-1)');
+    times++;
+  }, 500);
+
+  videoPlayerJ.animate({
+    volume: 1.0
+  }, 1000);
+  overlayJ.animate({
+    'background-color': 'rgba(0, 0, 0, 0)'
+  }, 1000)
+  overlaytextJ.animate({
+    'color': 'rgba(255, 255, 255, 0.0)'
+  }, 1000)
+}
+
+function alertQueue(counterID) {
+
+  cID = counterID.substr(counterID.length - 1);
+  cust_number = counter_values[parseInt(cID) - 1]
+
+  document.getElementById("overlaynumber").innerHTML = cust_number;
+  document.getElementById("overlaycounter").innerHTML = "Counter " + cID;
+
+  // Effects:
+  // Lower volume
+  var videoPlayerJ = $('#videoPlayer')
+  var overlayJ = $('#overlay')
+  var overlaytextJ = $('#overlaytext')
+  videoPlayerJ.animate({
+    volume: 0.2
+  }, 1000).delay(2000);
+  overlayJ.animate({
+    'background-color': 'rgba(0, 0, 0, 0.9)'
+  }, 1000).delay(2000)
+  overlaytextJ.animate({
+    'color': 'rgba(255, 255, 255, 1.0)'
+  }, 1000).delay(2000)
+  // Play sfx
+  var audio = new Audio('assets/notification.mp3');
+  audio.play();
+
+  var target = document.getElementById('customer_0' + cID)
+  var times = 0
+  var flasher = setInterval(function() {
+    if (times == 5) clearInterval(flasher);
+    target.style.textShadow = (target.style.textShadow == 'var(--text-flashing) 0px 0px 1vh' ? 'black 0px 0px 1vh' : 'var(--text-flashing) 0px 0px 1vh');
+    target.style.color = (target.style.color == 'var(--text-visible-2-1)' ? 'var(--text-flashing)' : 'var(--text-visible-2-1)');
     times++;
   }, 500);
 
@@ -216,6 +290,10 @@ function handleQueue(counterID) {
 // Listen for counter events:
 socket.on('next', function(data) {
   if (valid_counters.includes(data.counterID)) handleQueue(data.counterID);
+});
+
+socket.on('repeat', function(data) {
+  if (valid_counters.includes(data.counterID)) alertQueue(data.counterID);
 });
 
 socket.on('full-restart', function(data) {
@@ -250,7 +328,7 @@ document.getElementById('date').innerHTML = formatDate(new Date())
 var videoPlayer = document.getElementById('videoPlayer');
 videoPlayer.onended = function() {
   if (cur_videoArray === undefined || cur_videoArray.length == 0) {
-    cur_videoArray = videoArray;
+    cur_videoArray = videoArray.slice();
     videoPlayer.src = "shared/default/SMPI.mov";
   } else {
     videoPlayer.src = "shared/videos/" + cur_videoArray.pop();
