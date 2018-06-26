@@ -50,8 +50,10 @@ fs.readFile('./static/shared/scrolling-text.txt', 'utf8', function (err,data) {
 let videoArray = [];
 fs.readdir('./static/shared/videos/', (err, files) => {
   files.forEach(file => {
-    console.log(file);
-    videoArray.push(file);
+    if(file != '.gitkeep') {
+      console.log(file);
+      videoArray.push(file);
+    }
   });
 })
 
@@ -59,8 +61,10 @@ fs.readdir('./static/shared/videos/', (err, files) => {
 let photoArray = [];
 fs.readdir('./static/shared/photos/', (err, files) => {
   files.forEach(file => {
-    console.log(file);
-    photoArray.push(file);
+    if(file != '.gitkeep') {
+      console.log(file);
+      photoArray.push(file);
+    }
   });
 })
 

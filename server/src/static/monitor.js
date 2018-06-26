@@ -35,10 +35,6 @@ socket.on('load-data', function(data) {
   photoArray = data.photo_array.slice();
   cur_photoArray = data.photo_array.slice();
 
-  console.log(data.current_array)
-  console.log(data.current_array_others)
-  console.log(data.counter)
-  console.log(data.scroll_text)
   // FIT TO SCROLLBAR:
   document.getElementById('scrolling').innerHTML = data.scroll_text
 });
@@ -123,9 +119,6 @@ window.onload = function() {
   var photo_4 = document.getElementById('image4');
 
   function changePhoto(photoElement) {
-    console.log('tes')
-    console.log(cur_photoArray)
-    console.log(photoArray)
     if (cur_photoArray === undefined || cur_photoArray.length == 0) {
       cur_photoArray = photoArray.slice();
       photoElement.src = "shared/photos/sample-2.png";
@@ -182,8 +175,10 @@ function handleQueue(counterID) {
 
   counter_values[parseInt(cID) - 1] = nextinline;
 
-  document.getElementById("overlaynumber").innerHTML = nextinline;
   document.getElementById("overlaycounter").innerHTML = "Counter " + cID;
+
+  var overlayNum = $("#overlaynumber")
+  var overlayCnr = $("#overlaycounter")
 
   socket.emit('callback', {
     counterID: counterID,
@@ -203,12 +198,17 @@ function handleQueue(counterID) {
     });
   }
 
+    console.log(nextinline)
   // Effects:
   // Lower volume
   var videoPlayerJ = $('#videoPlayer')
   var overlayJ = $('#overlay')
   var overlaytextJ = $('#overlaytext')
-  videoPlayerJ.animate({
+  videoPlayerJ.queue(function(n){
+    $('#overlaynumber').html(nextinline);
+    $('#overlaycounter').html("Counter " + cID);
+    n();
+  }).animate({
     volume: 0.2
   }, 1000).delay(2000);
   overlayJ.animate({
