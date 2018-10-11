@@ -5,6 +5,7 @@ const valid_counters = ['001', '002', '003', '004', '005', '006', '007'];
 
 var counter_values = [];
 let queue_numbers = [];
+let queue_numbers_2 = [];
 let queue_numbers_others = [];
 
 let videoArray = [];
@@ -14,6 +15,7 @@ let cur_photoArray = [];
 
 socket.on('load-data', function(data) {
   queue_numbers = data.current_array;
+  queue_numbers_2 = data.current_array_2;
   queue_numbers_others = data.current_array_others;
 
   for (i = 1; i <= 7; i++) {
@@ -41,15 +43,22 @@ socket.on('load-data', function(data) {
 
 function arrayInit() {
   queue_numbers = []
+  queue_numbers_2 = []
   queue_numbers_others = []
   for (i = 0; i <= 79; i++) {
     queue_numbers.push(80 - i);
+  }
+  for (i = 0; i <= 79; i++) {
+    queue_numbers.push(280 - i);
   }
   for (i = 0; i <= 49; i++) {
     queue_numbers_others.push(150 - i);
   }
   socket.emit('save-array', {
     array: queue_numbers
+  })
+  socket.emit('save-array-2', {
+    array: queue_numbers_2
   })
   socket.emit('save-array-others', {
     array: queue_numbers_others
@@ -63,6 +72,16 @@ function arrayInitMain() {
   }
   socket.emit('save-array', {
     array: queue_numbers
+  })
+}
+
+function arrayInitMain2() {
+  queue_numbers_2 = []
+  for (i = 0; i <= 79; i++) {
+    queue_numbers_2.push(280 - i);
+  }
+  socket.emit('save-array-22', {
+    array: queue_numbers_2
   })
 }
 
@@ -155,6 +174,12 @@ function checkEmpty(array) {
   }
 }
 
+function checkEmpty2(array) {
+  if (array === undefined || array.length == 0) {
+    arrayInitMain2();
+  }
+}
+
 function checkEmptyOthers(array) {
   if (array === undefined || array.length == 0) {
     arrayInitOthers();
@@ -162,9 +187,13 @@ function checkEmptyOthers(array) {
 }
 
 function handleQueue(counterID) {
+  console.log(queue_numbers_2)
   if (counterID == '007') {
     checkEmptyOthers(queue_numbers_others);
     var nextinline = queue_numbers_others.pop();
+  } else if (counterID == '003' || counterID == '004') {
+    checkEmpty2(queue_numbers_2);
+    var nextinline = queue_numbers_2.pop();
   } else {
     checkEmpty(queue_numbers);
     var nextinline = queue_numbers.pop();
@@ -191,6 +220,10 @@ function handleQueue(counterID) {
   if (counterID == '007') {
     socket.emit('save-array-others', {
       array: queue_numbers_others
+    });
+  } else if (counterID == '003' || counterID == '004') {
+    socket.emit('save-array-2', {
+      array: queue_numbers_2
     });
   } else {
     socket.emit('save-array', {

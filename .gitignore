@@ -1,4 +1,4 @@
-server/src/node_modules
+src/node_modules
 server/src/yarn.lock
 client/src/node_modules
 client/src/yarn.lock
@@ -8,3 +8,4 @@ server/src/static/shared/photos/*
 server/src/static/shared/videos/*
 !server/src/static/shared/photos/.gitkeep
 !server/src/static/shared/videos/.gitkeep
+server/src/data/

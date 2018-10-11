@@ -15,7 +15,8 @@ db.defaults({
   006: 0,
   007: 0,
   current_array: [],
-  current_array_others: []
+  current_array_2: [],
+  current_array_others: [],
 }).write();
 
 // Express and socket.io
@@ -82,6 +83,7 @@ io.on('connection', function(socket) {
       db.get('007')
     ],
     current_array: db.get('current_array'),
+    current_array_2: db.get('current_array_2'),
     current_array_others: db.get('current_array_others'),
     scroll_text: scrolltext,
     photo_array: photoArray,
@@ -130,6 +132,9 @@ io.on('connection', function(socket) {
   });
   socket.on('save-array', function(data) {
     db.set('current_array', data.array).write();
+  })
+  socket.on('save-array-2', function(data) {
+    db.set('current_array_2', data.array).write();
   })
   socket.on('save-array-others', function(data) {
     db.set('current_array_others', data.array).write();
