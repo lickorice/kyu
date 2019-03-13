@@ -14,6 +14,7 @@ let cur_photoArray = [];
 
 socket.on('load-data', function(data) {
   queue_numbers = data.current_array;
+  queue_numbers_renewal = data.current_array_renewal;
   queue_numbers_others = data.current_array_others;
 
   for (i = 1; i <= 7; i++) {
@@ -63,6 +64,16 @@ function arrayInitMain() {
   }
   socket.emit('save-array', {
     array: queue_numbers
+  })
+}
+
+function arrayInitRenewal() {
+  queue_numbers_renewal = []
+  for (i = 0; i <= 29; i++) {
+    queue_numbers_renewal.push(230 - i);
+  }
+  socket.emit('save-array-renewal', {
+    array: queue_numbers_renewal
   })
 }
 
@@ -155,6 +166,12 @@ function checkEmpty(array) {
   }
 }
 
+function checkEmptyRenewal(array) {
+  if (array === undefined || array.length == 0) {
+    arrayInitRenewal();
+  }
+}
+
 function checkEmptyOthers(array) {
   if (array === undefined || array.length == 0) {
     arrayInitOthers();
@@ -165,6 +182,9 @@ function handleQueue(counterID) {
   if (counterID == '007') {
     checkEmptyOthers(queue_numbers_others);
     var nextinline = queue_numbers_others.pop();
+  } else if (counterID == '003' || counterID == '004') { 
+    checkEmptyRenewal(queue_numbers_renewal);
+    var nextinline = queue_numbers_renewal.pop();
   } else {
     checkEmpty(queue_numbers);
     var nextinline = queue_numbers.pop();
@@ -191,6 +211,10 @@ function handleQueue(counterID) {
   if (counterID == '007') {
     socket.emit('save-array-others', {
       array: queue_numbers_others
+    });
+  } else if (counterID == '003' || counterID == '004'){
+    socket.emit('save-array-renewal', {
+      array: queue_numbers_renewal
     });
   } else {
     socket.emit('save-array', {
