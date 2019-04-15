@@ -43,6 +43,7 @@ socket.on('load-data', function(data) {
 function arrayInit() {
   queue_numbers = []
   queue_numbers_others = []
+  queue_numbers_renewal = []
   for (i = 0; i <= 79; i++) {
     queue_numbers.push(80 - i);
   }
@@ -54,6 +55,12 @@ function arrayInit() {
   })
   socket.emit('save-array-others', {
     array: queue_numbers_others
+  })
+  for (i = 0; i <= 29; i++) {
+    queue_numbers_renewal.push(230 - i);
+  }
+  socket.emit('save-array-renewal', {
+    array: queue_numbers_renewal
   })
 }
 
@@ -166,15 +173,15 @@ function checkEmpty(array) {
   }
 }
 
-function checkEmptyRenewal(array) {
-  if (array === undefined || array.length == 0) {
-    arrayInitRenewal();
-  }
-}
-
 function checkEmptyOthers(array) {
   if (array === undefined || array.length == 0) {
     arrayInitOthers();
+  }
+}
+
+function checkEmptyRenewal(array) {
+  if (array === undefined || array.length == 0) {
+    arrayInitRenewal();
   }
 }
 
@@ -353,7 +360,7 @@ var videoPlayer = document.getElementById('videoPlayer');
 videoPlayer.onended = function() {
   if (cur_videoArray === undefined || cur_videoArray.length == 0) {
     cur_videoArray = videoArray.slice();
-    videoPlayer.src = "shared/default/SMPI.mov";
+    videoPlayer.src = "shared/default/SMPI.mp4";
   } else {
     videoPlayer.src = "shared/videos/" + cur_videoArray.pop();
   }
